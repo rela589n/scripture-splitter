@@ -1,0 +1,14 @@
+{% apply spaceless %}
+{% if previousVerse is not empty %}
+    ![[{{ chapterReference }} {{ previousVerse.number }}#^{{ previousVerse.anchor }}]]
+{% endif %}
+{% endapply %}
+
+
+{{ verse.number }} {{ verse.text }} ^{{ verse.anchor }}
+
+{% apply spaceless %}
+{% if nextVerse is not empty %}
+    ![[{{ chapterReference }} {{ nextVerse.number }}#^{{ nextVerse.anchor }}]]
+{% endif %}
+{% endapply %}

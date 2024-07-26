@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Service;
 
-use App\Model\VerseDescriptor;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\Config\FileLocator;
@@ -19,7 +18,7 @@ final readonly class VerseFileWriter
     ) {
     }
 
-    /** @param list<VerseDescriptor> $descriptors */
+    /** @param list<FileDescriptor> $descriptors */
     public function write(string $outputDirName, array $descriptors): void
     {
         $storageDirectory = $this->fileLocator->locate($this->storageDir);

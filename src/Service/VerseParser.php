@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Service;
 
+use App\Model\Passage;
 use App\Model\Verse;
 
 final readonly class VerseParser
 {
-    /** @return Verse[] */
-    public function parse(string $inputText): array
+    public function parse(string $inputText): Passage
     {
         $verses = [];
         $pattern = '/(\d+)(\D+)/u';
@@ -21,6 +21,6 @@ final readonly class VerseParser
             $verses[] = new Verse((int)$number, $text);
         }
 
-        return $verses;
+        return new Passage($verses);
     }
 }

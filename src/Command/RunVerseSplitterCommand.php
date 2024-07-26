@@ -57,11 +57,11 @@ final class RunVerseSplitterCommand extends Command
 
         $inputText = $this->reader->read($inputFileName);
 
-        $verses = $this->parser->parse($inputText);
+        $passage = $this->parser->parse($inputText);
 
-        $descriptors = $this->formatter->format($chapterReference, $verses);
+        $verseDescriptors = $this->formatter->format($chapterReference, $passage);
 
-        $this->writer->write($outputDirName, $descriptors);
+        $this->writer->write($outputDirName, $verseDescriptors);
 
         $io->success('Files have been successfully written');
 

@@ -1,0 +1,13 @@
+---
+tags:
+  - passage
+---
+
+{% apply spaceless %}
+{% for verse in passage.verses %}
+{% include 'verseReference.md.twig' with {
+    chapterReference: chapterReference,
+    verse: verse,
+} only %}
+{% endfor %}
+{% endapply %}

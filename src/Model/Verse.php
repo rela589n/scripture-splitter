@@ -22,11 +22,13 @@ final readonly class Verse
         return $this->number;
     }
 
+    /** @api */
     public function getText(): string
     {
         return $this->text;
     }
 
+    /** @api */
     public function getAnchor(): string
     {
         return $this->anchor;

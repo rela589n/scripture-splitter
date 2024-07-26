@@ -5,7 +5,10 @@ tags:
 
 {% apply spaceless %}
 {% if previousVerse is not empty %}
-    ![[{{ chapterReference }} {{ previousVerse.number }}#^{{ previousVerse.anchor }}]]
+{% include 'verseReference.md.twig' with {
+    chapterReference: chapterReference,
+    verse: previousVerse,
+} only %}
 {% endif %}
 {% endapply %}
 
@@ -14,6 +17,9 @@ tags:
 
 {% apply spaceless %}
 {% if nextVerse is not empty %}
-    ![[{{ chapterReference }} {{ nextVerse.number }}#^{{ nextVerse.anchor }}]]
+{% include 'verseReference.md.twig' with {
+    chapterReference: chapterReference,
+    verse: nextVerse,
+} only %}
 {% endif %}
 {% endapply %}

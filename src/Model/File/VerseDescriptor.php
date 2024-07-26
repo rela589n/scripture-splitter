@@ -2,9 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Model;
+namespace App\Model\File;
 
-final readonly class VerseDescriptor
+use App\Model\Verse;
+use App\Service\FileDescriptor;
+
+final readonly class VerseDescriptor implements FileDescriptor
 {
     public function __construct(
         private string $chapterReference,

@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace App\Model\File;
 
-use App\Model\Passage;
+use App\Model\Chapter;
 use App\Service\FileDescriptor;
 
-final readonly class PassageDescriptor implements FileDescriptor
+final readonly class ChapterDescriptor implements FileDescriptor
 {
     public function __construct(
-        private string $chapterReference,
-        private Passage $passage,
+        private Chapter $chapter,
         private string $content,
     ) {
     }
@@ -20,9 +19,9 @@ final readonly class PassageDescriptor implements FileDescriptor
     {
         return sprintf(
             '%s %d-%d.md',
-            $this->chapterReference,
-            $this->passage->getStartVerseNumber(),
-            $this->passage->getEndVerseNumber(),
+            $this->chapter->getReference(),
+            $this->chapter->getFirstVerseNumber(),
+            $this->chapter->getLastVerseNumber(),
         );
     }
 

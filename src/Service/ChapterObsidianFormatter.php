@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Service;
 
-use App\Model\File\PassageDescriptor;
+use App\Model\File\ChapterDescriptor;
 use App\Model\File\VerseDescriptor;
-use App\Model\Passage;
+use App\Model\Chapter;
 use Twig\Environment;
 use Twig\Error\Error;
 
-final readonly class ObsidianFormatter
+final readonly class ChapterObsidianFormatter
 {
     public function __construct(
         private Environment $twig,
@@ -22,32 +22,32 @@ final readonly class ObsidianFormatter
      *
      * @return list<VerseDescriptor>
      */
-    public function format(string $chapterReference, Passage $passage): array
+    public function format(Chapter $chapter): array
     {
         $descriptors = [];
 
-        $verses = $passage->getVerses();
+        $verses = $chapter->getVerses();
 
         foreach ($verses as $index => $verse) {
             $previousVerse = $verses[$index - 1] ?? null;
             $nextVerse = $verses[$index + 1] ?? null;
 
             $content = $this->twig->render('verse.md.twig', [
-                'chapterReference' => $chapterReference,
+                'chapterReference' => $chapter->getReference(),
                 'previousVerse' => $previousVerse,
                 'verse' => $verse,
                 'nextVerse' => $nextVerse,
             ]);
 
-            $descriptors[] = new VerseDescriptor($chapterReference, $verse, $content);
+            $descriptors[] = new VerseDescriptor($verse, $content);
         }
 
         $passageContent = $this->twig->render('passage.md.twig', [
-            'chapterReference' => $chapterReference,
-            'passage' => $passage,
+            'chapterReference' => $chapter->getReference(),
+            'passage' => $chapter,
         ]);
 
-        $descriptors[] = new PassageDescriptor($chapterReference, $passage, $passageContent);
+        $descriptors[] = new ChapterDescriptor($chapter, $passageContent);
 
         return $descriptors;
     }

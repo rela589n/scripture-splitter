@@ -4,23 +4,25 @@ declare(strict_types=1);
 
 namespace App\Service;
 
-use App\Model\Passage;
+use App\Model\Chapter;
 use App\Model\Verse;
 
-final readonly class VerseParser
+final readonly class ChapterParser
 {
-    public function parse(string $inputText): Passage
+    public function parse(string $chapterReference, string $inputText): Chapter
     {
-        $verses = [];
+        $chapter = Chapter::create($chapterReference);
+
         $pattern = '/(\d+)(\D+)/u';
         preg_match_all($pattern, $inputText, $matches, PREG_SET_ORDER);
 
         foreach ($matches as $match) {
             $number = $match[1];
             $text = trim($match[2]);
-            $verses[] = new Verse((int)$number, $text);
+
+            Verse::create($chapter, (int)$number, $text);
         }
 
-        return new Passage($verses);
+        return $chapter;
     }
 }

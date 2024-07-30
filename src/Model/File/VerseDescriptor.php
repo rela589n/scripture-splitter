@@ -10,7 +10,6 @@ use App\Service\FileDescriptor;
 final readonly class VerseDescriptor implements FileDescriptor
 {
     public function __construct(
-        private string $chapterReference,
         private Verse $verse,
         private string $content,
     ) {
@@ -23,6 +22,6 @@ final readonly class VerseDescriptor implements FileDescriptor
 
     public function getFileName(): string
     {
-        return sprintf('%s %d.md', $this->chapterReference, $this->verse->getNumber());
+        return sprintf('%s %d.md', $this->verse->getChapter()->getReference(), $this->verse->getNumber());
     }
 }

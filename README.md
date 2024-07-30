@@ -1,6 +1,8 @@
 Scripture Splitter
 -----
 
+## Single chapter splitter
+
 Create input file in `var/storage/`:
 
 ```shell
@@ -14,3 +16,11 @@ bin/console splitter:run "Івана 11" --inputFile=john11.txt --outputDir=john
 ```
 
 See the generated files in `var/storage/john11/`.
+
+## Range splitter
+
+In `storage/matthew` create files `11.txt`, `12.txt`, `13.txt` etc. and then run:
+
+```shell
+bin/console splitter:run-range "Матвія" --workDir=matthew/ --range="11-13"
+```

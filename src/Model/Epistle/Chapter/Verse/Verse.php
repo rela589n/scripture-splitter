@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Model;
+namespace App\Model\Epistle\Chapter\Verse;
+
+use App\Model\Epistle\Chapter\Chapter;
 
 final readonly class Verse
 {
@@ -22,6 +24,11 @@ final readonly class Verse
     public static function create(Chapter $chapter, int $number, string $text): self
     {
         return new self($chapter, $number, $text);
+    }
+
+    public function getReference(): string
+    {
+        return sprintf('%s %s', $this->chapter->getReference(), $this->number);
     }
 
     public function getPreviousVerse(): ?self

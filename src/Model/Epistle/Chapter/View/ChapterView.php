@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Model\File;
+namespace App\Model\Epistle\Chapter\View;
 
-use App\Model\Chapter;
-use App\Service\FileDescriptor;
+use App\Model\Epistle\Chapter\Chapter;
+use App\Service\FileView;
 
-final readonly class ChapterDescriptor implements FileDescriptor
+final readonly class ChapterView implements FileView
 {
     public function __construct(
         private Chapter $chapter,
@@ -18,10 +18,8 @@ final readonly class ChapterDescriptor implements FileDescriptor
     public function getFileName(): string
     {
         return sprintf(
-            '%s %d-%d.md',
+            '%s.md',
             $this->chapter->getReference(),
-            $this->chapter->getFirstVerseNumber(),
-            $this->chapter->getLastVerseNumber(),
         );
     }
 

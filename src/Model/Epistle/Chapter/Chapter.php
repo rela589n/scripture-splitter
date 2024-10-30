@@ -2,20 +2,31 @@
 
 declare(strict_types=1);
 
-namespace App\Model;
+namespace App\Model\Epistle\Chapter;
+
+use App\Model\Epistle\Chapter\Verse\Verse;
+use App\Model\Epistle\Epistle;
 
 final class Chapter
 {
-    public function __construct(
+    private function __construct(
+        private Epistle $epistle,
+        private int $number,
         private readonly string $reference,
         /** @var array<int,Verse> $verses */
         private array $verses,
     ) {
+        $this->epistle->addChapter($this);
     }
 
-    public static function create(string $reference): Chapter
+    public static function parse(Epistle $epistle, int $number, string $reference): Chapter
     {
-        return new self($reference, []);
+        return new self($epistle, $number, $reference, []);
+    }
+
+    public function getNumber(): int
+    {
+        return $this->number;
     }
 
     public function getPreviousVerse(Verse $verse): ?Verse
@@ -66,11 +77,11 @@ final class Chapter
 
     public function getPreviousChapter(): ?self
     {
-
+        return $this->epistle->getPreviousChapter($this);
     }
 
     public function getNextChapter(): ?self
     {
-
+        return $this->epistle->getNextChapter($this);
     }
 }

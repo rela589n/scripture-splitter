@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Model\File;
+namespace App\Model\Epistle\Chapter\Verse\View;
 
-use App\Model\Verse;
-use App\Service\FileDescriptor;
+use App\Model\Epistle\Chapter\Verse\Verse;
+use App\Service\FileView;
 
-final readonly class VerseDescriptor implements FileDescriptor
+final readonly class VerseView implements FileView
 {
     public function __construct(
         private Verse $verse,

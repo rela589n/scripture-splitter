@@ -2,7 +2,10 @@
 
 namespace App\Command;
 
-use App\Service\ChapterRangeSplitter;
+use App\Model\Epistle\Chapter\ChapterRange;
+use App\Service\ChapterObsidianFormatter;
+use App\Service\EpistleParser;
+use App\Service\VerseFileWriter;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -14,12 +17,15 @@ use Webmozart\Assert\Assert;
 
 #[AsCommand(
     name: 'splitter:run-range',
-    description: 'Run chapter range splitter',
+    description: 'Run epistle splitter',
 )]
-class RunChapterRangeSplitterCommand extends Command
+class RunEpistleSplitterCommand extends Command
 {
-    public function __construct(private readonly ChapterRangeSplitter $splitter)
-    {
+    public function __construct(
+        private readonly EpistleParser $parser,
+        private ChapterObsidianFormatter $formatter,
+        private VerseFileWriter $writer,
+    ) {
         parent::__construct();
     }
 
@@ -43,13 +49,19 @@ class RunChapterRangeSplitterCommand extends Command
         $workDirName = $input->getOption('workDir');
         Assert::notEmpty($workDirName);
 
-        /** @var array $chapterRange */
-        $chapterRange = explode('-', $input->getOption('range'));
-        [$rangeStart, $rangeEnd] = $chapterRange;
-        $chapterRange = [(int)$rangeStart, (int)$rangeEnd];
-        Assert::lessThanEq($chapterRange[0], $chapterRange[1]);
+        /** @var array $chapterRangeArray */
+        $chapterRangeArray = explode('-', $input->getOption('range'));
+        $chapterRange = new ChapterRange((int)$chapterRangeArray[0], (int)$chapterRangeArray[1]);
 
-        $this->splitter->run($bookReference, $workDirName, $chapterRange);
+        $epistle = $this->parser->parse($bookReference, $workDirName, $chapterRange);
+
+        foreach ($epistle->getChapters() as $chapter) {
+            $outputDirName = sprintf('%s%d/', $workDirName, $chapter->getNumber());
+
+            $verseDescriptors = $this->formatter->format($chapter);
+
+            $this->writer->write($outputDirName, $verseDescriptors);
+        }
 
         $io->success('Files have been successfully written');
 

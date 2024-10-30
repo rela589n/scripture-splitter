@@ -18,7 +18,7 @@ final readonly class VerseFileWriter
     ) {
     }
 
-    /** @param list<FileDescriptor> $descriptors */
+    /** @param list<FileView> $descriptors */
     public function write(string $outputDirName, array $descriptors): void
     {
         $storageDirectory = $this->fileLocator->locate($this->storageDir);

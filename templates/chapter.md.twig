@@ -1,0 +1,25 @@
+---
+tags:
+  - chapter
+---
+
+{% apply spaceless %}
+{% if previousChapter is not empty %}
+[[{{ previousChapter.reference }}]]
+{% endif %}
+{% endapply %}
+
+
+{% apply spaceless %}
+{% for verse in chapter.verses %}
+{% include 'verseReference.md.twig' with { verse: verse } only %}
+{% endfor %}
+{% endapply %}
+
+
+{% apply spaceless %}
+{% if nextChapter is not empty %}
+[[{{ nextChapter.reference }}]]
+{% endif %}
+{% endapply %}
+

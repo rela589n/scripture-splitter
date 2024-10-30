@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Service;
 
-use App\Model\File\ChapterDescriptor;
-use App\Model\File\VerseDescriptor;
-use App\Model\Chapter;
+use App\Model\Epistle\Chapter\Chapter;
+use App\Model\Epistle\Chapter\Verse\View\VerseView;
+use App\Model\Epistle\Chapter\View\ChapterView;
 use Twig\Environment;
 use Twig\Error\Error;
 
@@ -20,7 +20,7 @@ final readonly class ChapterObsidianFormatter
     /**
      * @throws Error
      *
-     * @return list<VerseDescriptor>
+     * @return list<VerseView>
      */
     public function format(Chapter $chapter): array
     {
@@ -28,26 +28,23 @@ final readonly class ChapterObsidianFormatter
 
         $verses = $chapter->getVerses();
 
-        foreach ($verses as $index => $verse) {
-            $previousVerse = $verses[$index - 1] ?? null;
-            $nextVerse = $verses[$index + 1] ?? null;
-
+        foreach ($verses as $verse) {
             $content = $this->twig->render('verse.md.twig', [
-                'chapterReference' => $chapter->getReference(),
-                'previousVerse' => $previousVerse,
                 'verse' => $verse,
-                'nextVerse' => $nextVerse,
+                'previousVerse' => $verse->getPreviousVerse(),
+                'nextVerse' => $verse->getNextVerse(),
             ]);
 
-            $descriptors[] = new VerseDescriptor($verse, $content);
+            $descriptors[] = new VerseView($verse, $content);
         }
 
-        $passageContent = $this->twig->render('passage.md.twig', [
-            'chapterReference' => $chapter->getReference(),
-            'passage' => $chapter,
+        $passageContent = $this->twig->render('chapter.md.twig', [
+            'chapter' => $chapter,
+            'previousChapter' => $chapter->getPreviousChapter(),
+            'nextChapter' => $chapter->getNextChapter(),
         ]);
 
-        $descriptors[] = new ChapterDescriptor($chapter, $passageContent);
+        $descriptors[] = new ChapterView($chapter, $passageContent);
 
         return $descriptors;
     }

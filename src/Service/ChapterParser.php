@@ -4,24 +4,24 @@ declare(strict_types=1);
 
 namespace App\Service;
 
-use App\Model\Chapter;
-use App\Model\Verse;
+use App\Model\Epistle\Chapter\Chapter;
+use App\Model\Epistle\Epistle;
 
 final readonly class ChapterParser
 {
-    public function parse(string $chapterReference, string $inputText): Chapter
+    public function __construct(
+        private VerseFileReader $reader,
+        private ChapterVersesParser $versesParser,
+    ) {
+    }
+
+    public function parse(Epistle $epistle, int $number, string $chapterReference, string $inputFileName): Chapter
     {
-        $chapter = Chapter::create($chapterReference);
+        $chapter = Chapter::parse($epistle, $number, $chapterReference);
 
-        $pattern = '/(\d+)(\D+)/u';
-        preg_match_all($pattern, $inputText, $matches, PREG_SET_ORDER);
+        $inputText = $this->reader->read($inputFileName);
 
-        foreach ($matches as $match) {
-            $number = $match[1];
-            $text = trim($match[2]);
-
-            Verse::create($chapter, (int)$number, $text);
-        }
+        $this->versesParser->parse($chapter, $inputText);
 
         return $chapter;
     }

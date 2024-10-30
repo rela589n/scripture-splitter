@@ -6,7 +6,6 @@ tags:
 {% apply spaceless %}
 {% if previousVerse is not empty %}
 {% include 'verseReference.md.twig' with {
-    chapterReference: chapterReference,
     verse: previousVerse,
 } only %}
 {% endif %}
@@ -18,7 +17,6 @@ tags:
 {% apply spaceless %}
 {% if nextVerse is not empty %}
 {% include 'verseReference.md.twig' with {
-    chapterReference: chapterReference,
     verse: nextVerse,
 } only %}
 {% endif %}

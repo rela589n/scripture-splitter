@@ -2,7 +2,7 @@
 
 namespace App\Command;
 
-use App\Service\ChapterSplitter;
+use App\Service\ChapterParser;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -19,7 +19,7 @@ use Webmozart\Assert\Assert;
 final class RunChapterSplitterCommand extends Command
 {
     public function __construct(
-        private readonly ChapterSplitter $splitter,
+        private readonly ChapterParser $splitter,
     ) {
         parent::__construct();
     }
@@ -49,7 +49,7 @@ final class RunChapterSplitterCommand extends Command
         $outputDirName = $input->getOption('outputDir');
         Assert::notEmpty($outputDirName);
 
-        $this->splitter->run($inputFileName, $chapterReference, $outputDirName);
+        $this->splitter->parse($inputFileName, $chapterReference, $outputDirName);
 
         $io->success('Files have been successfully written');
 

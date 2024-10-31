@@ -12,16 +12,15 @@ final class Chapter
     private function __construct(
         private Epistle $epistle,
         private int $number,
-        private readonly string $reference,
         /** @var array<int,Verse> $verses */
         private array $verses,
     ) {
         $this->epistle->addChapter($this);
     }
 
-    public static function parse(Epistle $epistle, int $number, string $reference): Chapter
+    public static function parse(Epistle $epistle, int $number): Chapter
     {
-        return new self($epistle, $number, $reference, []);
+        return new self($epistle, $number, []);
     }
 
     public function getNumber(): int
@@ -41,7 +40,7 @@ final class Chapter
 
     public function getReference(): string
     {
-        return $this->reference;
+        return sprintf('%s %d', $this->epistle->getName(), $this->number);
     }
 
     public function addVerse(Verse $verse): void

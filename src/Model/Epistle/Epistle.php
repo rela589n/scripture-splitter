@@ -7,12 +7,18 @@ namespace App\Model\Epistle;
 use App\Model\Epistle\Chapter\Chapter;
 use App\Model\Epistle\Chapter\ChapterRange;
 
-final  class Epistle
+final class Epistle
 {
     public function __construct(
+        private string $name,
         /** @var array<int,Chapter> */
         private array $chapters,
     ) {
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
     }
 
     public function getChapterRange(): ChapterRange

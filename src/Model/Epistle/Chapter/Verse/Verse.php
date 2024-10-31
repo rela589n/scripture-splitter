@@ -26,6 +26,7 @@ final readonly class Verse
         return new self($chapter, $number, $text);
     }
 
+    /** @api */
     public function getReference(): string
     {
         return sprintf('%s %s', $this->chapter->getReference(), $this->number);

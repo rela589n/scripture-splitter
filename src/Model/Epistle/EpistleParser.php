@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Service;
+namespace App\Model\Epistle;
 
+use App\Model\Epistle\Chapter\ChapterParser;
 use App\Model\Epistle\Chapter\ChapterRange;
-use App\Model\Epistle\Epistle;
 
 final readonly class EpistleParser
 {
@@ -14,15 +14,14 @@ final readonly class EpistleParser
     ) {
     }
 
-    public function parse(string $bookReference, string $workDirName, ChapterRange $chapterRange): Epistle
+    public function parse(string $epistleName, string $workDirName, ChapterRange $chapterRange): Epistle
     {
-        $epistle = new Epistle([]);
+        $epistle = new Epistle($epistleName, []);
 
         foreach ($chapterRange->getRange() as $chapterNumber) {
             $inputFileName = sprintf('%s%d.txt', $workDirName, $chapterNumber);
-            $chapterReference = sprintf('%s %d', $bookReference, $chapterNumber);
 
-            $this->chapterParser->parse($epistle, $chapterNumber, $chapterReference, $inputFileName);
+            $this->chapterParser->parse($epistle, $chapterNumber, $inputFileName);
         }
 
         return $epistle;

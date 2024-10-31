@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Service;
+namespace App\Model\Epistle\Chapter\Verse;
 
 use App\Model\Epistle\Chapter\Chapter;
-use App\Model\Epistle\Chapter\Verse\Verse;
 
 final readonly class ChapterVersesParser
 {

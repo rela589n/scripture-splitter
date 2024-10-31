@@ -2,7 +2,7 @@
 
 namespace App\Command;
 
-use App\Service\ChapterParser;
+use App\Model\Epistle\Chapter\ChapterParser;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -49,7 +49,7 @@ final class RunChapterSplitterCommand extends Command
         $outputDirName = $input->getOption('outputDir');
         Assert::notEmpty($outputDirName);
 
-        $this->splitter->parse($inputFileName, $chapterReference, $outputDirName);
+        $this->splitter->parse($inputFileName, $chapterReference);
 
         $io->success('Files have been successfully written');
 

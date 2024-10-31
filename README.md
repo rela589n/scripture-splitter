@@ -22,5 +22,5 @@ See the generated files in `var/storage/john11/`.
 In `storage/matthew` create files `11.txt`, `12.txt`, `13.txt` etc. and then run:
 
 ```shell
-bin/console splitter:run-range "Колосян" --workDir=colossians/ --range="1-4"
+bin/console app:epistle:parse "Колосян" --workDir=colossians/ --range="1-4"
 ```

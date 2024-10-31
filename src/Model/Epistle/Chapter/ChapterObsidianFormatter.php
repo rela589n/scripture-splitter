@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
-namespace App\Service;
+namespace App\Model\Epistle\Chapter;
 
-use App\Model\Epistle\Chapter\Chapter;
 use App\Model\Epistle\Chapter\Verse\View\VerseView;
 use App\Model\Epistle\Chapter\View\ChapterView;
 use Twig\Environment;
@@ -20,7 +19,7 @@ final readonly class ChapterObsidianFormatter
     /**
      * @throws Error
      *
-     * @return list<VerseView>
+     * @return VerseView
      */
     public function format(Chapter $chapter): array
     {

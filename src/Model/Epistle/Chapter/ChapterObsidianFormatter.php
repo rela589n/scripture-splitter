@@ -37,14 +37,6 @@ final readonly class ChapterObsidianFormatter
             $descriptors[] = new VerseView($verse, $content);
         }
 
-        $chapterContent = $this->twig->render('chapter.md.twig', [
-            'chapter' => $chapter,
-            'previousChapter' => $chapter->getPreviousChapter(),
-            'nextChapter' => $chapter->getNextChapter(),
-        ]);
-
-        $descriptors[] = new ChapterView($chapter, $chapterContent);
-
         return $descriptors;
     }
 }

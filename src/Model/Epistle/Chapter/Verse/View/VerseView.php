@@ -22,6 +22,11 @@ final readonly class VerseView implements FileView
 
     public function getFileName(): string
     {
-        return sprintf('%s %d.md', $this->verse->getChapter()->getReference(), $this->verse->getNumber());
+        return sprintf(
+            '%s %d %s.md',
+            $this->verse->getChapter()->getReference(),
+            $this->verse->getNumber(),
+            $this->verse->getTranslationName(),
+        );
     }
 }

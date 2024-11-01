@@ -32,6 +32,7 @@ class ParseEpistleCommand extends Command
     {
         $this
             ->addArgument('epistleName', InputArgument::REQUIRED, 'Epistle name, example: "Івана"')
+            ->addArgument('translation', InputArgument::REQUIRED, 'Translation name, example: "UBIO"')
             ->addOption('workDir', null, InputOption::VALUE_REQUIRED, 'Working directory')
             ->addOption('range', null, InputOption::VALUE_REQUIRED, 'Chapters range');
     }
@@ -44,6 +45,10 @@ class ParseEpistleCommand extends Command
         $epistleName = $input->getArgument('epistleName');
         Assert::notEmpty($epistleName);
 
+        /** @var string $translationName */
+        $translationName = $input->getArgument('translation');
+        Assert::notEmpty($translationName);
+
         /** @var string $workDirName */
         $workDirName = $input->getOption('workDir');
         Assert::notEmpty($workDirName);
@@ -52,12 +57,12 @@ class ParseEpistleCommand extends Command
         $chapterRangeArray = explode('-', $input->getOption('range'));
         $chapterRange = new ChapterRange((int)$chapterRangeArray[0], (int)$chapterRangeArray[1]);
 
-        $epistle = $this->parser->parse($epistleName, $workDirName, $chapterRange);
+        $epistle = $this->parser->parse($epistleName, $translationName, $workDirName, $chapterRange);
 
         foreach ($epistle->getChapters() as $chapter) {
             $outputDirName = sprintf('%s%d/', $workDirName, $chapter->getNumber());
 
-            $verseDescriptors = $this->formatter->format($chapter);
+            $verseDescriptors = $this->formatter->format($chapter,);
 
             $this->writer->write($outputDirName, $verseDescriptors);
         }

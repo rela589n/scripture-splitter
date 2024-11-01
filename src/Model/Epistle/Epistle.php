@@ -11,6 +11,7 @@ final class Epistle
 {
     public function __construct(
         private string $name,
+        private string $translationName,
         /** @var array<int,Chapter> */
         private array $chapters,
     ) {
@@ -63,5 +64,10 @@ final class Epistle
     public function getNextChapter(Chapter $chapter): ?Chapter
     {
         return $this->chapters[$chapter->getNumber() + 1] ?? null;
+    }
+
+    public function getTranslationName(): string
+    {
+        return $this->translationName;
     }
 }

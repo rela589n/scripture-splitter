@@ -65,4 +65,9 @@ final readonly class Verse
     {
         return $this->anchor;
     }
+
+    public function getTranslationName(): string
+    {
+        return $this->chapter->getTranslationName();
+    }
 }

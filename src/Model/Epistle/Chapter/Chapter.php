@@ -83,4 +83,9 @@ final class Chapter
     {
         return $this->epistle->getNextChapter($this);
     }
+
+    public function getTranslationName(): string
+    {
+        return $this->epistle->getTranslationName();
+    }
 }

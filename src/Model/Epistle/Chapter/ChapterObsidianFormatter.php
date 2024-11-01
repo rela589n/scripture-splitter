@@ -19,7 +19,7 @@ final readonly class ChapterObsidianFormatter
     /**
      * @throws Error
      *
-     * @return VerseView
+     * @return VerseView[]
      */
     public function format(Chapter $chapter): array
     {
@@ -37,13 +37,13 @@ final readonly class ChapterObsidianFormatter
             $descriptors[] = new VerseView($verse, $content);
         }
 
-        $passageContent = $this->twig->render('chapter.md.twig', [
+        $chapterContent = $this->twig->render('chapter.md.twig', [
             'chapter' => $chapter,
             'previousChapter' => $chapter->getPreviousChapter(),
             'nextChapter' => $chapter->getNextChapter(),
         ]);
 
-        $descriptors[] = new ChapterView($chapter, $passageContent);
+        $descriptors[] = new ChapterView($chapter, $chapterContent);
 
         return $descriptors;
     }

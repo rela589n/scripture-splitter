@@ -18,8 +18,9 @@ final readonly class ChapterView implements FileView
     public function getFileName(): string
     {
         return sprintf(
-            '%s.md',
+            '%s %s.md',
             $this->chapter->getReference(),
+            $this->chapter->getTranslationName(),
         );
     }
 

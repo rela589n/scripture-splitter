@@ -14,9 +14,9 @@ final readonly class EpistleParser
     ) {
     }
 
-    public function parse(string $epistleName, string $workDirName, ChapterRange $chapterRange): Epistle
+    public function parse(string $epistleName, string $translationName, string $workDirName, ChapterRange $chapterRange): Epistle
     {
-        $epistle = new Epistle($epistleName, []);
+        $epistle = new Epistle($epistleName, $translationName, []);
 
         foreach ($chapterRange->getRange() as $chapterNumber) {
             $inputFileName = sprintf('%s%d.txt', $workDirName, $chapterNumber);
